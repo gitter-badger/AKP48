@@ -28,9 +28,6 @@ function Nick() {
     //ways to call this command.
     this.aliases = ['nick'];
 
-    //The power level needed to use this command.
-    this.powerLevel = 9000;
-
     //whether or not to allow this command in a private message.
     this.allowPm = true;
 
@@ -39,6 +36,10 @@ function Nick() {
 }
 
 Nick.prototype.execute = function(context) {
+    if(config.getPerms().powerLevelFromContext(context) < config.powerLevels[context.getClient().uuid]["root"]) {
+        return true;
+    }
+
     if(context.arguments[0]) {
         context.client.getIRCClient().send("NICK", context.arguments[0]);
         context.client.nick = context.arguments[0];
