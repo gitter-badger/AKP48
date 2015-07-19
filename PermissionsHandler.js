@@ -57,7 +57,7 @@ PermissionsHandler.prototype.powerLevel = function(userHostmask, channel, client
         this.log.warn({uuid: clientUUID, channel: channel}, "Channel not found."); return 1;}
 
     if(!this.permissions[clientUUID][channel].users) {
-        this.log.debug({uuid: clientUUID, channel: channel}, "Channel has no users defined."); return 1;}
+        this.log.trace({uuid: clientUUID, channel: channel}, "Channel has no users defined."); return 1;}
 
     //somewhat hacky way to include global perms in here.
     if(this.permissions[clientUUID]["global"]) {
@@ -68,11 +68,8 @@ PermissionsHandler.prototype.powerLevel = function(userHostmask, channel, client
         }
     }
 
-    if(!this.permissions[clientUUID][channel].users) {
-        this.log.debug({uuid: clientUUID, channel: channel}, "Channel has no users defined."); return 1;}
-
     if(!this.permissions[clientUUID][channel].users[userHostmask]) {
-        this.log.debug({uuid: clientUUID, channel: channel, user: userHostmask}, "User not found."); return 1;}
+        this.log.trace({uuid: clientUUID, channel: channel, user: userHostmask}, "User not found."); return 1;}
 
     return (globalPL || this.permissions[clientUUID][channel].users[userHostmask].powerLevel);
 };
